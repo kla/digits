@@ -1,0 +1,5 @@
+#!/bin/sh
+if hash open 2>/dev/null; then
+  open -g http://127.0.0.1:5173
+fi
+yarn dev

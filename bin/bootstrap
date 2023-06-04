@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "==> Installing node"
+nodenv install -s `cat .node-version`
+npm install -g yarn
