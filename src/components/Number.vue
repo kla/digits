@@ -1,10 +1,13 @@
 <template>
-  <span :class="classes">{{ formattedValue }}</span>
+  <span :class="classes">
+    <span>{{ number.formatted }}</span>
+    <span v-if="number.abbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.abbreviation }}</span>
+  </span>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import numbro from 'numbro'
+import { formatNumber } from '../format'
 
 const props = defineProps({
   value: { type: [ Number, String ], required: true },
@@ -14,23 +17,23 @@ const props = defineProps({
 })
 
 const classes = computed(() => {
-  const classes = [ 'vue-number' ]
-  if (props.value < 0) classes.push('negative')
-  if (props.colored) classes.push('colored')
+  const classes = [ 'vn' ]
+  if (props.value < 0) classes.push('vn-negative')
+  if (props.colored) classes.push('vn-colored')
   return classes.join(' ')
 })
-const formattedValue = computed(() => {
-  return numbro(props.value).formatCurrency({ thousandSeparated: true, mantissa: props.decimals, average: props.abbreviated }).toUpperCase()
-})
+const number = computed(() => formatNumber(props.value, props))
 </script>
 
 <style lang="scss" scoped>
-.colored {
-  &.vue-number {
-    color: limegreen;
-  }
-  &.negative {
-    color: indianred;
-  }
+.vn {
+  &-trillion { color: var(--vn-trillion, violet) }
+  &-billion { color: var(--vn-billion, blueviolet) }
+  &-million { color: var(--vn-million, goldenrod) }
+  &-thousand { color: var(--vn-thousand, lightskyblue) }
+}
+.vn-colored {
+  color: var(--vn-positive, limegreen);
+  &.vn-negative { color: var(--vn-negative, indianred) }
 }
 </style>
