@@ -8,24 +8,28 @@ const UNITS = {
 }
 
 export function formatNumber(value, options) {
-  options = { decimals: 2, abbreviated: false, ...options }
-
   const number = { value: value, string: null, abbreviation: null }
 
-  number.string = number.formatted = numbro(value).formatCurrency({
+  options = { decimals: 2, abbreviated: false, ...options }
+  const string = number.formatted = numbro(value).format({
     thousandSeparated: true,
     mantissa: options.decimals,
     average: options.abbreviated,
   }).toUpperCase()
 
   if (options.abbreviated) {
-    const abbreviation = getAbbreviation(number.string)
+    const abbreviation = getAbbreviation(string)
 
     if (abbreviation) {
       number.abbreviation = abbreviation
       number.unit = UNITS[abbreviation] || null
-      number.formatted = number.string.slice(0, -1)
+      number.formatted = string.slice(0, -1)
     }
+  }
+
+  if (options.symbol) {
+    number.symbol = options.symbol
+    number.formatted = `${options.symbol}${number.formatted}`
   }
 
   return number

@@ -14,6 +14,7 @@ const props = defineProps({
   decimals: { type: Number, default: 2 },
   abbreviated: { type: Boolean, default: false },
   colored: { type: Boolean, default: true },
+  symbol: { type: String, default: '$' },
 })
 
 const classes = computed(() => {
