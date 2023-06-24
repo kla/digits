@@ -1,5 +1,13 @@
 import numbro from 'numbro'
 
+interface Number {
+  value: number,
+  formatted: string,
+  symbol?: string,
+  unit?: string,
+  abbreviation?: string,
+}
+
 const UNITS = {
   'K': 'thousand',
   'M': 'million',
@@ -7,17 +15,16 @@ const UNITS = {
   'T': 'trillion',
 }
 
-export function formatNumber(value, options) {
-  const number = { value: value, string: null, abbreviation: null }
-
-  options = { decimals: 2, abbreviated: false, ...options }
+export function formatNumber(value: string | number, options: object) {
+  const opts = { decimals: 2, abbreviated: false, ...options }
+  const number: Number = { value: typeof(value) == 'string' ? parseFloat(value) : value, formatted: '' }
   const string = number.formatted = numbro(value).format({
     thousandSeparated: true,
-    mantissa: options.decimals,
-    average: options.abbreviated,
+    mantissa: opts.decimals,
+    average: opts.abbreviated,
   }).toUpperCase()
 
-  if (options.abbreviated) {
+  if (opts.abbreviated) {
     const abbreviation = getAbbreviation(string)
 
     if (abbreviation) {
@@ -27,15 +34,15 @@ export function formatNumber(value, options) {
     }
   }
 
-  if (options.symbol) {
-    number.symbol = options.symbol
-    number.formatted = `${options.symbol}${number.formatted}`
+  if (opts.symbol) {
+    number.symbol = opts.symbol
+    number.formatted = `${opts.symbol}${number.formatted}`
   }
 
   return number
 }
 
-function getAbbreviation(s) {
+function getAbbreviation(s: string) {
   const last = s.slice(-1)
   return last.charCodeAt(0) >= 65 && last.charCodeAt(0) <= 90 ? last : null
 }

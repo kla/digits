@@ -9,17 +9,24 @@
 import { computed } from 'vue'
 import { formatNumber } from '../format'
 
-const props = defineProps({
-  value: { type: [ Number, String ], required: true },
-  decimals: { type: Number, default: 2 },
-  abbreviated: { type: Boolean, default: false },
-  colored: { type: Boolean, default: true },
-  symbol: { type: String, default: '$' },
+export interface Props {
+  value: number | string,
+  decimals?: number,
+  abbreviated?: boolean,
+  colored?: boolean,
+  symbol?: string,
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  decimals: 2,
+  abbreviated: false,
+  colored: true,
+  symbol: '$',
 })
 
 const classes = computed(() => {
   const classes = [ 'vn' ]
-  if (props.value < 0) classes.push('vn-negative')
+  if (parseFloat(props.value.toString()) < 0) classes.push('vn-negative')
   if (props.colored) classes.push('vn-colored')
   return classes.join(' ')
 })
