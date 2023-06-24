@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import Number from './components/Number.vue'
 
 const numbers = [

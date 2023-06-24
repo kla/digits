@@ -5,7 +5,7 @@
   </span>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { formatNumber } from '../format'
 
