@@ -1,6 +1,6 @@
 <template>
   <span :class="classes">
-    <span>{{ number.formatted }}</span>
+    <span v-if="value">{{ number.formatted }}</span>
     <span v-if="number.abbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.abbreviation }}</span>
   </span>
 </template>
@@ -10,7 +10,7 @@ import { computed } from 'vue'
 import { formatNumber } from '../format'
 
 export interface Props {
-  value: number | string,
+  value?: number | string,
   decimals?: number,
   abbreviated?: boolean,
   colored?: boolean,
@@ -18,6 +18,7 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  value: '',
   decimals: 2,
   abbreviated: false,
   colored: true,

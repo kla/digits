@@ -18,6 +18,10 @@ const UNITS = {
 export function formatNumber(value: string | number, options: object) {
   const opts = { decimals: 2, abbreviated: false, ...options }
   const number: Number = { value: typeof(value) == 'string' ? parseFloat(value) : value, formatted: '' }
+
+  if (!value)
+    return number
+
   const string = number.formatted = numbro(value).format({
     thousandSeparated: true,
     mantissa: opts.decimals,
@@ -36,7 +40,7 @@ export function formatNumber(value: string | number, options: object) {
 
   if (opts.symbol) {
     number.symbol = opts.symbol
-    number.formatted = `${opts.symbol}${number.formatted}`
+    number.formatted = `${opts.symbol}${number.formatted}`.replace('$-', '-$')
   }
 
   return number
