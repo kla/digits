@@ -18,14 +18,6 @@
         <td align="right"><Number :value="item.change" /></td>
       </tr>
     </table>
-
-    <br />
-    <table>
-      <tr v-for="number in numbers">
-        <td><Number :value="number" /></td>
-        <td><Number :value="number" abbreviated /></td>
-      </tr>
-    </table>
   </div>
 </template>
 
