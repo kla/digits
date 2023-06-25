@@ -16,8 +16,11 @@ const UNITS = {
 }
 
 export function formatNumber(value: string | number, options: object) {
-  const opts = { decimals: 2, abbreviated: false, ...options }
-  const number: Number = { value: typeof(value) == 'string' ? parseFloat(value) : value, formatted: '' }
+  const opts = { decimals: 2, abbreviated: false, symbol: null, showSymbol: true, ...options }
+  const number: Number = {
+    value: typeof(value) == 'string' ? parseFloat(value) : value,
+    formatted: '',
+  }
 
   if (!value)
     return number
@@ -43,7 +46,7 @@ export function formatNumber(value: string | number, options: object) {
     number.formatted = `${opts.symbol}${number.formatted}`.replace(`$-${opts.symbol}`, `-${opts.symbol}`)
   }
 
-  if (!opts.showSymbol)
+  if (!opts.showSymbol && number.symbol)
     number.formatted = number.formatted.replace(number.symbol, '')
 
   return number
