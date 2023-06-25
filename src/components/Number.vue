@@ -15,6 +15,7 @@ export interface Props {
   abbreviated?: boolean,
   colored?: boolean,
   symbol?: string,
+  showSymbol?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   abbreviated: false,
   colored: true,
   symbol: '$',
+  showSymbol: true,
 })
 
 const classes = computed(() => {
