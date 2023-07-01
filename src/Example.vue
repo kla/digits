@@ -2,6 +2,7 @@
   <div class="example">
     <table width="650">
       <tr>
+        <th></th>
         <th align="left">Symbol</th>
         <th align="left">Name</th>
         <th align="right">Market Cap</th>
@@ -10,6 +11,7 @@
         <th align="right">Change</th>
       </tr>
       <tr v-for="item in data">
+        <td><img class="icon" :src="`/src/images/${item.ticker.toLowerCase()}.svg`" /></td>
         <td>{{ item.ticker }}</td>
         <td>{{ item.name }}</td>
         <td align="right"><Number :value="item.market_cap" abbreviated /></td>
@@ -58,6 +60,7 @@ ul {
   margin: 0;
   padding: 0;
 }
-td {
+.icon {
+  border-radius: 9px;
 }
 </style>
