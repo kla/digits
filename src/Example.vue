@@ -11,7 +11,7 @@
         <th align="right">Change</th>
       </tr>
       <tr v-for="item in data">
-        <td><img class="icon" :src="`/src/images/${item.ticker.toLowerCase()}.svg`" /></td>
+        <td><img class="icon" width="15" :src="`/src/images/${item.ticker.toLowerCase()}.svg`" /></td>
         <td>{{ item.ticker }}</td>
         <td>{{ item.name }}</td>
         <td align="right"><Number :value="item.market_cap" abbreviated /></td>
@@ -62,5 +62,7 @@ ul {
 }
 .icon {
   border-radius: 9px;
+  vertical-align: middle;
+  margin-bottom: 2px;
 }
 </style>
