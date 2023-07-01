@@ -43,7 +43,7 @@ export function formatNumber(value: string | number, options: object) {
 
   if (opts.symbol) {
     number.symbol = opts.symbol
-    number.formatted = `${opts.symbol}${number.formatted}`.replace(`$-${opts.symbol}`, `-${opts.symbol}`)
+    number.formatted = `${opts.symbol}${number.formatted}`.replace(`${opts.symbol}-`, `-${opts.symbol}`)
   }
 
   if (!opts.showSymbol && number.symbol)
