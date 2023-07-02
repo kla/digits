@@ -11,6 +11,7 @@ const UNITS = {
   'M': 'million',
   'B': 'billion',
   'T': 'trillion',
+  'Q': 'quadrillion',
 }
 
 function abbreviate(num, decimals) {
