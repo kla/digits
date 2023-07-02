@@ -29,7 +29,7 @@ import Number from './components/Number.vue'
 const data = [
   { ticker: 'AAPL', name: 'Apple', market_cap: 2_936_000_000_000, usd_price: 186.68, change: -0.31 },
   { ticker: 'MSFT', name: 'Microsoft', market_cap: 2_491_000_000_000, usd_price: 335.02, change: -0.46 },
-  { ticker: '2222.SR', name: 'Saudi Aramco', market_cap: 2_093_000_000_000, usd_price: 8.6, change: 0.13 },
+  { ticker: '2222.SR', name: 'Saudi Aramco', market_cap: 2_300_000_000_000, usd_price: 8.6, change: 0.13 },
   { ticker: 'GOOG', name: 'Google', market_cap: 1_557_000_000_000, usd_price: 123.02, change: -0.84 },
   { ticker: 'AMZN', name: 'Amazon', market_cap: 1_326_000_000_000, usd_price: 129.33, change: -0.81 },
   { ticker: 'NVDA', name: 'Nvidia', market_cap: 1_042_000_000_000, usd_price: 422.09, change: -8.01 },

@@ -1,11 +1,9 @@
-import numbro from 'numbro'
-
 interface Number {
   value: number,
   formatted: string,
   symbol?: string,
   unit?: string,
-  abbreviation?: string,
+  unitAbbreviation?: string,
 }
 
 const UNITS = {
@@ -13,6 +11,27 @@ const UNITS = {
   'M': 'million',
   'B': 'billion',
   'T': 'trillion',
+}
+
+function abbreviate(num, decimals) {
+  const units = Object.getOwnPropertyNames(UNITS)
+  const divider = 1000
+  let i = units.length - 1
+
+  while (i >= 0) {
+    const unit = Math.pow(divider, i + 1)
+
+    if (Math.abs(num) >= unit) {
+      return {
+        value: (Math.round(num / unit * Math.pow(10, decimals)) / Math.pow(10, decimals)).toFixed(decimals),
+        unit: UNITS[units[i]],
+        unitAbbreviation: units[i],
+      }
+    }
+
+    i--
+  }
+  return num.toFixed(decimals)
 }
 
 export function formatNumber(value: string | number, options: object) {
@@ -25,21 +44,13 @@ export function formatNumber(value: string | number, options: object) {
   if (!value)
     return number
 
-  const string = number.formatted = numbro(value).format({
-    thousandSeparated: true,
-    mantissa: opts.decimals,
-    average: opts.abbreviated,
-  }).toUpperCase()
-
-  if (opts.abbreviated) {
-    const abbreviation = getAbbreviation(string)
-
-    if (abbreviation) {
-      number.abbreviation = abbreviation
-      number.unit = UNITS[abbreviation] || null
-      number.formatted = string.slice(0, -1)
-    }
-  }
+  if (opts.abbreviated && number.value > 0.0) {
+    const abbr = abbreviate(number.value, opts.decimals)
+    number.formatted = abbr.value
+    number.unitAbbreviation = abbr.unitAbbreviation
+    number.unit = abbr.unit
+  } else
+    number.formatted = number.value.toFixed(opts.decimals).toLocaleString()
 
   if (opts.symbol) {
     number.symbol = opts.symbol
@@ -50,9 +61,4 @@ export function formatNumber(value: string | number, options: object) {
     number.formatted = number.formatted.replace(number.symbol, '')
 
   return number
-}
-
-function getAbbreviation(s: string) {
-  const last = s.slice(-1)
-  return last.charCodeAt(0) >= 65 && last.charCodeAt(0) <= 90 ? last : null
 }

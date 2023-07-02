@@ -1,7 +1,7 @@
 <template>
-  <span :class="classes">
+  <span :class="classes" :title="number.value.toLocaleString()">
     <span v-if="value">{{ number.formatted }}</span>
-    <span v-if="number.abbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.abbreviation }}</span>
+    <span v-if="number.unitAbbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
 </template>
 

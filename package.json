@@ -22,7 +22,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "numbro": ">= 2.3.6",
     "vue": ">= 3.0.0"
   },
   "devDependencies": {
