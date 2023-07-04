@@ -29,25 +29,36 @@ it('accepts symbol options', () => {
 describe('abbreviated numbers', () => {
   const options = { abbreviated: true }
 
-  it('can abbreviate numbers', () => {
+  it('abbreviates numbers', () => {
     const number = formatNumber(1_500_000_000_000_000, options)
     expect(number.value).toBe(1_500_000_000_000_000)
-    expect(number.formatted).toBe('1.50')
+    expect(number.formatted).toBe('1.50Q')
+    expect(number.string).toBe('1.50')
     expect(number.unitAbbreviation).toBe('Q')
     expect(number.unit).toBe('quadrillion')
-    expect(number.string).toBe('1.50Q')
 
-    expect(formatNumber(1_500_000_000_000_000, options).string).toBe('1.50Q')
-    expect(formatNumber(1_500_000_000_000, options).string).toBe('1.50T')
-    expect(formatNumber(1_500_000_000, options).string).toBe('1.50B')
-    expect(formatNumber(1_500_000, options).string).toBe('1.50M')
-    expect(formatNumber(1_500, options).string).toBe('1.50K')
-    expect(formatNumber(150.50, options).string).toBe('150.5')
+    expect(formatNumber(1_500_000_000_000_000, options).formatted).toBe('1.50Q')
+    expect(formatNumber(1_500_000_000_000, options).formatted).toBe('1.50T')
+    expect(formatNumber(1_500_000_000, options).formatted).toBe('1.50B')
+    expect(formatNumber(1_500_000, options).formatted).toBe('1.50M')
+    expect(formatNumber(1_500, options).formatted).toBe('1.50K')
+    expect(formatNumber(150.50, options).formatted).toBe('150.5')
+  })
+
+  it('abbreviates negative numbers', () => {
+    expect(formatNumber(-1_500_000, options).formatted).toBe('-1.50M')
+    expect(formatNumber(-1_500_000, options).string).toBe('-1.50')
   })
 
   it('accepts a decimals option and rounds', () => {
-    expect(formatNumber(1_155_000, { ...options, decimals: 2 }).string).toBe('1.16M')
-    expect(formatNumber(1_154_000, { ...options, decimals: 2 }).string).toBe('1.15M');
+    expect(formatNumber(1_155_000, { ...options, decimals: 2 }).formatted).toBe('1.16M')
+    expect(formatNumber(1_154_000, { ...options, decimals: 2 }).formatted).toBe('1.15M');
+  })
+
+  it('abbreviates numbers with a symbol', () => {
+    expect(formatNumber(1_500_000, { ...options, symbol: '$' }).formatted).toBe('$1.50M')
+    expect(formatNumber(-1_500_000, { ...options, symbol: '$' }).formatted).toBe('-$1.50M')
+    expect(formatNumber(-1_500_000, { ...options, symbol: '$' }).string).toBe('-1.50')
   })
 })
 

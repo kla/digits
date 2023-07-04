@@ -21,7 +21,9 @@ export function round(num : number, decimals : number | undefined | null) {
   return Math.round(num * multiplier) / multiplier
 }
 
-export function abbreviate(num, decimals) {
+export function abbreviate(number: number, decimals: number) {
+  const sign = number < 0 ? -1 : 1
+  const n = Math.abs(number)
   const units = Object.getOwnPropertyNames(UNITS)
   const divider = 1000
   let i = units.length - 1
@@ -29,9 +31,9 @@ export function abbreviate(num, decimals) {
   while (i >= 0) {
     const unit = Math.pow(divider, i + 1)
 
-    if (Math.abs(num) >= unit) {
+    if (n >= unit) {
       return {
-        value: (Math.round(num / unit * Math.pow(10, decimals)) / Math.pow(10, decimals)).toFixed(decimals),
+        value: (sign * (Math.round(n / unit * Math.pow(10, decimals)) / Math.pow(10, decimals))).toFixed(decimals),
         unit: UNITS[units[i]],
         unitAbbreviation: units[i],
       }
@@ -39,30 +41,35 @@ export function abbreviate(num, decimals) {
 
     i--
   }
-  return num.toFixed(decimals)
+
+  return { value: number, unit: '', unitAbbreviation: '' }
 }
 
 function withAbbreviation(number: Number, decimals: number) {
-  if (number.value <= 0.0)
-    return
-
   const abbr = abbreviate(number.value, decimals)
-  number.formatted = abbr.value || number.value.toString()
-  number.string = (abbr.value ? `${abbr.value}${abbr.unitAbbreviation}` : number.value).toString()
+
+  number.formatted = (abbr.value ? `${abbr.value}${abbr.unitAbbreviation}` : number.value).toString()
+  number.string = abbr.value?.toString()
   number.unitAbbreviation = abbr.unitAbbreviation
   number.unit = abbr.unit
-}
-
-function withSymbol(number: Number, symbol: string, showSymbol: boolean) {
-  number.symbol = symbol
-
-  number.formatted = symbol.length == 1 ? `${symbol}${number.formatted}` : `${number.formatted} ${symbol}`
-  number.formatted = number.formatted.replace(`${symbol}-`, `-${symbol}`)
 }
 
 function withLocaleString(number: Number, decimals) {
   const value = round(number.value, decimals)
   number.formatted = number.string = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+}
+
+function withSymbol(number: Number, symbol: string) {
+  const prepend = symbol.length == 1 ? true : false
+
+  if (prepend) {
+    const space = symbol.length == 1 ? '' : ' '
+    number.formatted = `${symbol}${space}${number.formatted}`
+  } else
+    number.formatted += ` ${symbol}`
+
+  number.formatted = number.formatted.replace(`${symbol}-`, `-${symbol}`)
+  number.symbol = symbol
 }
 
 export function formatNumber(value: string | number, options: object = {}) {
@@ -76,8 +83,7 @@ export function formatNumber(value: string | number, options: object = {}) {
   if (!value) return number
   if (opts.abbreviated) withAbbreviation(number, opts.decimals)
   if (!number.formatted) withLocaleString(number, opts.decimals)
-  if (!number.string) number.string = number.formatted
-  if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol, opts.showSymbol)
+  if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol)
 
   return number
 }

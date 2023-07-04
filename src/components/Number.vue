@@ -1,6 +1,6 @@
 <template>
   <span :class="classes" :title="number.value.toLocaleString()">
-    <span v-if="value">{{ number.formatted }}</span>
+    <span v-if="value">{{ formatted }}</span>
     <span v-if="number.unitAbbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
 </template>
@@ -34,6 +34,7 @@ const classes = computed(() => {
   return classes.join(' ')
 })
 const number = computed(() => formatNumber(props.value, props))
+const formatted = computed(() => number.value.formatted.replace(number.value.unitAbbreviation, ''))
 </script>
 
 <style lang="scss" scoped>
