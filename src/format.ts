@@ -14,6 +14,12 @@ interface Options {
   showSymbol?: boolean,
 }
 
+interface Abbreviation {
+  value: string,
+  unit: string,
+  unitAbbreviation: string,
+}
+
 const DEFAULT_OPTIONS: Options = { decimals: 2, abbreviated: false, symbol: undefined, showSymbol: true }
 const UNITS = {
   'K': 'thousand',
@@ -23,13 +29,13 @@ const UNITS = {
   'Q': 'quadrillion',
 }
 
-export function round(num : number, decimals : number | undefined | null) {
+export function round(num : number, decimals : number) {
   if (!decimals) return num
   let multiplier = Math.pow(10, decimals)
   return Math.round(num * multiplier) / multiplier
 }
 
-export function abbreviate(number: number, decimals: number) {
+export function abbreviate(number: number, decimals: number): Abbreviation {
   const sign = number < 0 ? -1 : 1
   const n = Math.abs(number)
   const units = Object.getOwnPropertyNames(UNITS)
@@ -50,7 +56,7 @@ export function abbreviate(number: number, decimals: number) {
     i--
   }
 
-  return { value: number, unit: '', unitAbbreviation: '' }
+  return { value: number.toFixed(decimals), unit: '', unitAbbreviation: '' }
 }
 
 function withAbbreviation(number: Number, decimals: number) {
@@ -80,7 +86,7 @@ function withSymbol(number: Number, symbol: string) {
   number.symbol = symbol
 }
 
-export function formatNumber(value: string | number, options: Options = {}) {
+export function formatNumber(value: string | number, options: Options = DEFAULT_OPTIONS) {
   const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
     value: typeof(value) == 'string' ? parseFloat(value) : value,

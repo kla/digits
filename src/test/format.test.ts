@@ -42,7 +42,7 @@ describe('abbreviated numbers', () => {
     expect(formatNumber(1_500_000_000, options).formatted).toBe('1.50B')
     expect(formatNumber(1_500_000, options).formatted).toBe('1.50M')
     expect(formatNumber(1_500, options).formatted).toBe('1.50K')
-    expect(formatNumber(150.50, options).formatted).toBe('150.5')
+    expect(formatNumber(150.50, options).formatted).toBe('150.50')
   })
 
   it('abbreviates negative numbers', () => {
