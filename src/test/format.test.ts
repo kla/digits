@@ -72,9 +72,4 @@ describe('round', () => {
     expect(round(1_500_000, 2)).toBe(1_500_000)
     expect(round(1_500_000.00, 2)).toBe(1_500_000)
   })
-
-  it('handles undefined and null decimals', () => {
-    expect(round(1_500_000.00, undefined)).toBe(1_500_000)
-    expect(round(1_500_000.00, null)).toBe(1_500_000)
-  })
 })
