@@ -11,6 +11,21 @@ it('focus accepts a decimals option and rounds', () => {
   expect(formatNumber(0.000001586, { decimals: 8 }).formatted).toBe('0.00000159')
 })
 
+it('accepts symbol options', () => {
+  expect(formatNumber(1_500_000, { symbol: '$' }).formatted).toBe('$1,500,000.00')
+  expect(formatNumber(-1_500_000, { symbol: '$' }).formatted).toBe('-$1,500,000.00')
+  expect(formatNumber(1_500_000, { symbol: '€' }).formatted).toBe('€1,500,000.00')
+  expect(formatNumber(-1_500_000, { symbol: '€' }).formatted).toBe('-€1,500,000.00')
+  expect(formatNumber(1_500_000, { symbol: '₿' }).formatted).toBe('₿1,500,000.00')
+  expect(formatNumber(-1_500_000, { symbol: '₿' }).formatted).toBe('-₿1,500,000.00')
+  expect(formatNumber(1_500_000, { symbol: '$' }).string).toBe('1,500,000.00')
+  expect(formatNumber(1_500_000, { symbol: '$' }).symbol).toBe('$')
+  expect(formatNumber(1_500_000, { symbol: '$', showSymbol: false }).formatted).toBe('1,500,000.00')
+  expect(formatNumber(1_500_000, { symbol: 'BTC' }).formatted).toBe('1,500,000.00 BTC')
+  expect(formatNumber(-1_500_000, { symbol: 'BTC' }).formatted).toBe('-1,500,000.00 BTC')
+  expect(formatNumber(1_500_000, { symbol: 'BTC', showSymbol: false }).formatted).toBe('1,500,000.00')
+})
+
 describe('abbreviated numbers', () => {
   const options = { abbreviated: true }
 

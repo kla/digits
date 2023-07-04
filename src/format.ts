@@ -53,9 +53,11 @@ function withAbbreviation(number: Number, decimals: number) {
   number.unit = abbr.unit
 }
 
-function withSymbol(number: Number, symbol: string) {
+function withSymbol(number: Number, symbol: string, showSymbol: boolean) {
   number.symbol = symbol
-  number.formatted = `${symbol}${number.formatted}`.replace(`${symbol}-`, `-${symbol}`)
+
+  number.formatted = symbol.length == 1 ? `${symbol}${number.formatted}` : `${number.formatted} ${symbol}`
+  number.formatted = number.formatted.replace(`${symbol}-`, `-${symbol}`)
 }
 
 function withLocaleString(number: Number, decimals) {
@@ -75,8 +77,7 @@ export function formatNumber(value: string | number, options: object = {}) {
   if (opts.abbreviated) withAbbreviation(number, opts.decimals)
   if (!number.formatted) withLocaleString(number, opts.decimals)
   if (!number.string) number.string = number.formatted
-  if (opts.symbol) withSymbol(number, opts.symbol)
-  if (!opts.showSymbol && number.symbol) number.formatted = number.formatted.replace(number.symbol, '')
+  if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol, opts.showSymbol)
 
   return number
 }
