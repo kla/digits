@@ -34,7 +34,7 @@ const classes = computed(() => {
   return classes.join(' ')
 })
 const number = computed(() => formatNumber(props.value, props))
-const formatted = computed(() => number.value.formatted.replace(number.value.unitAbbreviation, ''))
+const formatted = computed(() => number.value.formatted.replace(number.value.unitAbbreviation || '', ''))
 </script>
 
 <style lang="scss" scoped>

@@ -7,6 +7,14 @@ interface Number {
   unitAbbreviation?: string,
 }
 
+interface Options {
+  decimals?: number,
+  abbreviated?: boolean,
+  symbol?: string,
+  showSymbol?: boolean,
+}
+
+const DEFAULT_OPTIONS: Options = { decimals: 2, abbreviated: false, symbol: undefined, showSymbol: true }
 const UNITS = {
   'K': 'thousand',
   'M': 'million',
@@ -72,8 +80,8 @@ function withSymbol(number: Number, symbol: string) {
   number.symbol = symbol
 }
 
-export function formatNumber(value: string | number, options: object = {}) {
-  const opts = { decimals: 2, abbreviated: false, symbol: null, showSymbol: true, ...options }
+export function formatNumber(value: string | number, options: Options = {}) {
+  const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
     value: typeof(value) == 'string' ? parseFloat(value) : value,
     formatted: '',
