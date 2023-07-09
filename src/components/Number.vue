@@ -1,7 +1,7 @@
 <template>
   <span :class="classes" :title="number.value.toString()">
     <span v-if="value">{{ formatted }}</span>
-    <span v-if="number.unitAbbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.unitAbbreviation }}</span>
+    <span v-if="number.unitAbbreviation" :class="`fm-abbrev fm-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
 </template>
 
@@ -30,9 +30,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const classes = computed(() => {
-  const classes = [ 'vn' ]
-  if (parseFloat(props.value.toString()) < 0) classes.push('vn-negative')
-  if (props.colored) classes.push('vn-colored')
+  const classes = [ 'fm' ]
+  if (parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
+  if (props.colored) classes.push('fm-colored')
   return classes.join(' ')
 })
 const number = computed(() => format(props.value, props))
@@ -40,14 +40,14 @@ const formatted = computed(() => number.value.formatted.replace(number.value.uni
 </script>
 
 <style lang="scss" scoped>
-.vn {
-  &-trillion { color: var(--vn-trillion, violet) }
-  &-billion { color: var(--vn-billion, blueviolet) }
-  &-million { color: var(--vn-million, goldenrod) }
-  &-thousand { color: var(--vn-thousand, lightskyblue) }
+.fm {
+  &-trillion { color: var(--fm-trillion, violet) }
+  &-billion { color: var(--fm-billion, blueviolet) }
+  &-million { color: var(--fm-million, goldenrod) }
+  &-thousand { color: var(--fm-thousand, lightskyblue) }
 }
-.vn-colored {
-  color: var(--vn-positive, limegreen);
-  &.vn-negative { color: var(--vn-negative, indianred) }
+.fm-colored {
+  color: var(--fm-positive, limegreen);
+  &.fm-negative { color: var(--fm-negative, indianred) }
 }
 </style>
