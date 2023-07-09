@@ -109,7 +109,7 @@ function withSubscriptDecimals(number: Number, decimals: number) {
   })
 }
 
-export function formatNumber(value: string | number, options: Options = DEFAULT_OPTIONS) {
+export function format(value: string | number, options: Options = DEFAULT_OPTIONS) {
   const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
     value: typeof(value) == 'string' ? parseFloat(value) : value,

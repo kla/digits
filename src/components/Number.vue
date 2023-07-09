@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { DEFAULT_OPTIONS, formatNumber } from '../format'
+import { DEFAULT_OPTIONS, format } from '../format'
 
 export interface Props {
   value?: number | string,
@@ -35,7 +35,7 @@ const classes = computed(() => {
   if (props.colored) classes.push('vn-colored')
   return classes.join(' ')
 })
-const number = computed(() => formatNumber(props.value, props))
+const number = computed(() => format(props.value, props))
 const formatted = computed(() => number.value.formatted.replace(number.value.unitAbbreviation || '', ''))
 </script>
 
