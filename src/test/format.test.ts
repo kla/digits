@@ -1,8 +1,10 @@
-import { format, round } from '../format'
+import { format, formatToString, round } from '../format'
 
 it('does basic formatting', () => {
   expect(format(1_500_000).formatted).toBe('1,500,000.00')
   expect(format(1_500_000.00).formatted).toBe('1,500,000.00')
+  expect(formatToString(1_500_000)).toBe('1,500,000.00')
+  expect(formatToString(1_500_000.00)).toBe('1,500,000.00')
 })
 
 it('accepts a decimals option and rounds', () => {

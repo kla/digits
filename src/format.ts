@@ -125,3 +125,7 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
 
   return number
 }
+
+export function formatToString(value: string | number, options: Options = DEFAULT_OPTIONS) {
+  return format(value, options).formatted
+}
