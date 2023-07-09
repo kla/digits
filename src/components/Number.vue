@@ -31,12 +31,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 const classes = computed(() => {
   const classes = [ 'fm' ]
+
   if (parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
-  if (props.colored) classes.push('fm-colored')
+  if (props.colored && number.value.string != '-0.00' && number.value.string != '0.00') classes.push('fm-colored')
   return classes.join(' ')
 })
 const number = computed(() => format(props.value, props))
-const formatted = computed(() => number.value.formatted.replace(number.value.unitAbbreviation || '', ''))
+const formatted = computed(() => {
+  let f = number.value.formatted.replace(number.value.unitAbbreviation || '', '')
+  if (number.value.string == '-0.00') f = f.replace('-', '')
+  return f
+})
 </script>
 
 <style lang="scss" scoped>
