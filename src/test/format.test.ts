@@ -5,10 +5,11 @@ it('does basic formatting', () => {
   expect(formatNumber(1_500_000.00).formatted).toBe('1,500,000.00')
 })
 
-it('focus accepts a decimals option and rounds', () => {
+it('accepts a decimals option and rounds', () => {
   expect(formatNumber(1_500_000.5, { decimals: 2 }).formatted).toBe('1,500,000.50')
   expect(formatNumber(1_500_000, { decimals: 2 }).formatted).toBe('1,500,000.00')
-  expect(formatNumber(0.000001586, { decimals: 8 }).formatted).toBe('0.00000159')
+  expect(formatNumber(0.0001586, { decimals: 8 }).formatted).toBe('0.00015860')
+  expect(formatNumber(0.0001586, { decimals: 6 }).formatted).toBe('0.000159')
 })
 
 it('accepts symbol options', () => {
@@ -26,6 +27,14 @@ it('accepts symbol options', () => {
   expect(formatNumber(1_500_000, { symbol: 'BTC', showSymbol: false }).formatted).toBe('1,500,000.00')
 })
 
+it('accepts a subscriptDecimals option', () => {
+  expect(formatNumber(0.00037, { symbol: 'BTC', decimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.0₃37000 BTC')
+  expect(formatNumber(0.00037, { symbol: 'BTC', decimals: 8, subscriptDecimals: 4 }).formatted).toBe('0.00037000 BTC')
+  expect(formatNumber(0.01, { symbol: 'BTC', decimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.01000000 BTC')
+  expect(formatNumber(1.00, { symbol: 'BTC', decimals: 2, subscriptDecimals: 2 }).formatted).toBe('1.0₂ BTC')
+  expect(formatNumber(1.00, { symbol: '$', decimals: 2, subscriptDecimals: 3 }).formatted).toBe('$1.00')
+})
+
 describe('abbreviated numbers', () => {
   const options = { abbreviated: true }
 
@@ -37,6 +46,7 @@ describe('abbreviated numbers', () => {
     expect(number.unitAbbreviation).toBe('Q')
     expect(number.unit).toBe('quadrillion')
 
+    expect(formatNumber(1_500_000_000_000_000_000, options).formatted).toBe('1500.00Q') // TODO should have a comma
     expect(formatNumber(1_500_000_000_000_000, options).formatted).toBe('1.50Q')
     expect(formatNumber(1_500_000_000_000, options).formatted).toBe('1.50T')
     expect(formatNumber(1_500_000_000, options).formatted).toBe('1.50B')
@@ -59,6 +69,10 @@ describe('abbreviated numbers', () => {
     expect(formatNumber(1_500_000, { ...options, symbol: '$' }).formatted).toBe('$1.50M')
     expect(formatNumber(-1_500_000, { ...options, symbol: '$' }).formatted).toBe('-$1.50M')
     expect(formatNumber(-1_500_000, { ...options, symbol: '$' }).string).toBe('-1.50')
+  })
+
+  it('abbreviates numbers with a symbol name', () => {
+    expect(formatNumber(1_500_000, { ...options, symbol: 'BTC' }).formatted).toBe('1.50M BTC')
   })
 })
 

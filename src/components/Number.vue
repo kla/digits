@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes" :title="number.value.toLocaleString()">
+  <span :class="classes" :title="number.value.toString()">
     <span v-if="value">{{ formatted }}</span>
     <span v-if="number.unitAbbreviation" :class="`vn-abbrev vn-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { formatNumber } from '../format'
+import { DEFAULT_OPTIONS, formatNumber } from '../format'
 
 export interface Props {
   value?: number | string,
@@ -16,15 +16,17 @@ export interface Props {
   colored?: boolean,
   symbol?: string,
   showSymbol?: boolean,
+  subscriptDecimals?: number,
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: '',
-  decimals: 2,
-  abbreviated: false,
+  decimals: DEFAULT_OPTIONS.decimals,
+  abbreviated: DEFAULT_OPTIONS.abbreviated,
   colored: true,
   symbol: '$',
   showSymbol: true,
+  subscriptDecimals: DEFAULT_OPTIONS.subscriptDecimals,
 })
 
 const classes = computed(() => {

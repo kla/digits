@@ -12,6 +12,7 @@ interface Options {
   abbreviated?: boolean,
   symbol?: string,
   showSymbol?: boolean,
+  subscriptDecimals?: number,
 }
 
 interface Abbreviation {
@@ -20,13 +21,22 @@ interface Abbreviation {
   unitAbbreviation: string,
 }
 
-const DEFAULT_OPTIONS: Options = { decimals: 2, abbreviated: false, symbol: undefined, showSymbol: true }
+const DECIMAL_SEPARATOR = 1.1.toLocaleString().substring(1, 2)
+const SUBSCRIPTS = [ '₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉' ]
 const UNITS = {
   'K': 'thousand',
   'M': 'million',
   'B': 'billion',
   'T': 'trillion',
   'Q': 'quadrillion',
+}
+
+export const DEFAULT_OPTIONS: Options = {
+  decimals: 2,
+  abbreviated: false,
+  symbol: undefined,
+  showSymbol: true,
+  subscriptDecimals: 4,
 }
 
 export function round(num : number, decimals : number) {
@@ -86,6 +96,19 @@ function withSymbol(number: Number, symbol: string) {
   number.symbol = symbol
 }
 
+function numberToSubscript(number) {
+  return String(number).replace(/[0-9]/g, (digit) => SUBSCRIPTS[digit]);
+}
+
+function withSubscriptDecimals(number: Number, decimals: number) {
+  const regex = new RegExp(`\\${DECIMAL_SEPARATOR}(0+)`)
+
+  number.formatted = number.formatted.replace(regex, (n) => {
+    const numDecimals = n.length - 1 // -1 because of the decimal separator
+    return numDecimals >= decimals ? `${DECIMAL_SEPARATOR}0${numberToSubscript(numDecimals)}` : n
+  })
+}
+
 export function formatNumber(value: string | number, options: Options = DEFAULT_OPTIONS) {
   const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
@@ -95,8 +118,9 @@ export function formatNumber(value: string | number, options: Options = DEFAULT_
   }
 
   if (!value) return number
-  if (opts.abbreviated) withAbbreviation(number, opts.decimals)
+  if (opts.decimals && opts.abbreviated) withAbbreviation(number, opts.decimals)
   if (!number.formatted) withLocaleString(number, opts.decimals)
+  if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)
   if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol)
 
   return number
