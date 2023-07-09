@@ -1,19 +1,19 @@
 {
-  "name": "@kla/vue-number",
+  "name": "@kla/fomo",
   "version": "0.1.0",
-  "repository": "https://github.com/kla/vue-number",
+  "repository": "https://github.com/kla/fomo",
   "type": "module",
-  "main": "./dist/vue-number.umd.mjs",
-  "module": "./dist/vue-number.js",
+  "main": "./dist/fomo.umd.mjs",
+  "module": "./dist/fomo.js",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/vue-number.js",
-      "require": "./dist/vue-number.umd.cjs"
+      "import": "./dist/fomo.js",
+      "require": "./dist/fomo.umd.cjs"
     },
-    "./vue-number.css": "./dist/vue-number.css"
+    "./fomo.css": "./dist/fomo.css"
   },
   "scripts": {
     "dev": "vite",

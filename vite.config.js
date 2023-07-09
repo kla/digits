@@ -23,7 +23,7 @@ export default defineConfig({
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.name == 'style.css')
-            return 'vue-number.css';
+            return 'fomo.css';
           return assetInfo.name;
         }
       }

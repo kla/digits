@@ -1,3 +1,3 @@
 #!/bin/sh
-echo "==> Building vue-number component"
+echo "==> Building fomo component"
 yarn build
