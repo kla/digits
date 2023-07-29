@@ -1,5 +1,4 @@
-/* eslint-disable import/export */
-import { cleanup, render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/vue'
 import { afterEach } from 'vitest'
 
 afterEach(() => {
@@ -13,7 +12,7 @@ const customRender = (ui, options = {}) =>
     ...options,
   })
 
-export * from '@testing-library/react'
+export * from '@testing-library/vue'
 export { default as userEvent } from '@testing-library/user-event'
 // override render export
 export { customRender as render }
