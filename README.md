@@ -1,1 +1,1 @@
-fomo
+format money
