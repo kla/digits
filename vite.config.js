@@ -15,7 +15,7 @@ export default defineConfig({
     target: 'esnext',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'VueNumber',
+      name: 'fomo',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled into your library
