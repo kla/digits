@@ -1,19 +1,19 @@
 {
-  "name": "@kla/fomo",
-  "version": "0.1.0",
-  "repository": "https://github.com/kla/fomo",
+  "name": "@kla/digits",
+  "version": "0.3.0",
+  "repository": "https://github.com/kla/digits",
   "type": "module",
-  "main": "./dist/fomo.umd.mjs",
-  "module": "./dist/fomo.js",
+  "main": "./dist/digits.umd.mjs",
+  "module": "./dist/digits.js",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/fomo.js",
-      "require": "./dist/fomo.umd.cjs"
+      "import": "./dist/digits.js",
+      "require": "./dist/digits.umd.cjs"
     },
-    "./fomo.css": "./dist/fomo.css"
+    "./digits.css": "./dist/digits.css"
   },
   "scripts": {
     "dev": "vite",

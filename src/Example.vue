@@ -14,17 +14,17 @@
         <td><img class="icon" width="15" :src="`/src/images/${item.ticker.toLowerCase()}.svg`" /></td>
         <td>{{ item.ticker }}</td>
         <td>{{ item.name }}</td>
-        <td align="right"><Number :value="item.market_cap" abbreviated /></td>
-        <td align="right"><Number :value="item.usd_price" :colored="false" :decimals="item.usd_decimals || 2" /></td>
-        <td align="right"><Number :value="btcPrice(item.usd_price)" :colored="false" symbol="BTC" :show-symbol="false" :decimals="item.btc_decimals || 8" /></td>
-        <td align="right"><Number :value="item.change" /></td>
+        <td align="right"><Digits :value="item.market_cap" abbreviated /></td>
+        <td align="right"><Digits :value="item.usd_price" :colored="false" :decimals="item.usd_decimals || 2" /></td>
+        <td align="right"><Digits :value="btcPrice(item.usd_price)" :colored="false" symbol="BTC" :show-symbol="false" :decimals="item.btc_decimals || 8" /></td>
+        <td align="right"><Digits :value="item.change" /></td>
       </tr>
     </table>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Number from './Number.vue'
+import Digits from './Digits.vue'
 
 const data = [
   { ticker: 'AAPL', name: 'Apple', market_cap: 2_936_000_000_000, usd_price: 186.68, change: -0.31 },
@@ -45,7 +45,7 @@ const data = [
   { ticker: 'DOBO', name: 'DogeBonk', market_cap: 2_176_858, usd_price: 0.000000003734, change: 0.000000000004, usd_decimals: 12, btc_decimals: 13 },
 ]
 
-function btcPrice(usdPrice: number) {
+function btcPrice(usdPrice: Digits) {
   const btc = data.find(item => item.ticker === 'BTC')
   return btc ? usdPrice / btc.usd_price : undefined
 }

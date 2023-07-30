@@ -1,3 +1,3 @@
-![CI](https://github.com/kla/fomo/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/kla/digits/actions/workflows/ci.yml/badge.svg)
 
-format money
+Vue component for displaying formatted currency/asset values.

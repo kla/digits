@@ -1,3 +1,3 @@
-import Number from './Number.vue'
+import Digits from './Digits.vue'
 
-export { Number }
+export { Digits }

@@ -15,7 +15,7 @@ export default defineConfig({
     target: 'esnext',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'fomo',
+      name: 'digits',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled into your library
@@ -23,7 +23,7 @@ export default defineConfig({
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.name == 'style.css')
-            return 'fomo.css';
+            return 'digits.css';
           return assetInfo.name;
         }
       }
