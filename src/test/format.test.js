@@ -37,6 +37,17 @@ it('accepts a subscriptDecimals option', () => {
   expect(format(1.00, { symbol: '$', decimals: 2, subscriptDecimals: 3 }).formatted).toBe('$1.00')
 })
 
+it('formats zero', () => {
+  expect(format(0).formatted).toBe('0.00')
+})
+
+it('does nothing for null and undefined', () => {
+  expect(format(null).formatted).toBe('')
+  expect(format(null).string).toBe('')
+  expect(format(undefined).formatted).toBe('')
+  expect(format(undefined).string).toBe('')
+})
+
 describe('abbreviated numbers', () => {
   const options = { abbreviated: true }
 

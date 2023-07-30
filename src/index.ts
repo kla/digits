@@ -1,3 +1,3 @@
 import Digits from './Digits.vue'
 
-export { Digits }
+export default Digits

@@ -117,7 +117,7 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
     string: '',
   }
 
-  if (!value) return number
+  if (value == null || value == undefined) return number
   if (opts.decimals && opts.abbreviated) withAbbreviation(number, opts.decimals)
   if (!number.formatted) withLocaleString(number, opts.decimals)
   if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)

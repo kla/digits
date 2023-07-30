@@ -1,6 +1,6 @@
 <template>
   <span :class="classes" :title="number.value.toString()">
-    <span v-if="value">{{ formatted }}</span>
+    <span v-if="value != null && value != undefined">{{ formatted }}</span>
     <span v-if="number.unitAbbreviation" :class="`fm-abbrev fm-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
 </template>
