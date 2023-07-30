@@ -1,5 +1,5 @@
 import { render } from './utils'
-import Number from '../components/Number.vue'
+import Number from '../Number.vue'
 
 describe('Number', () => {
   it('renders', () => {

@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { DEFAULT_OPTIONS, format } from '../format'
+import { DEFAULT_OPTIONS, format } from './format'
 
 export interface Props {
   value?: number | string,
