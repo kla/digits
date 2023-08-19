@@ -37,6 +37,18 @@ it('accepts a subscriptDecimals option', () => {
   expect(format(1.00, { symbol: '$', decimals: 2, subscriptDecimals: 3 }).formatted).toBe('$1.00')
 })
 
+it('accepts a trim option', () => {
+  expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
+  expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
+  expect(format('1.05000', { decimals: 10, trim: true }).string).toBe('1.05')
+  expect(format('1.00', { decimals: 10, trim: true }).formatted).toBe('1')
+  expect(format('1.00', { decimals: 10, trim: true }).string).toBe('1')
+  expect(format(0.00402720, { decimals: 10, trim: true }).formatted).toBe('0.0040272')
+  expect(format(0.00402720, { decimals: 10, trim: true }).string).toBe('0.0040272')
+  expect(format(1_500_000, { abbreviated: true, trim: true }).formatted).toBe('1.5M')
+  expect(format(1_500_000, { abbreviated: true, trim: true }).string).toBe('1.5')
+})
+
 it('formats zero', () => {
   expect(format(0).formatted).toBe('0.00')
 })

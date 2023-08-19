@@ -13,6 +13,7 @@ interface Options {
   symbol?: string,
   showSymbol?: boolean,
   subscriptDecimals?: number,
+  trim?: boolean,
 }
 
 interface Abbreviation {
@@ -37,6 +38,7 @@ export const DEFAULT_OPTIONS: Options = {
   symbol: undefined,
   showSymbol: true,
   subscriptDecimals: 4,
+  trim: false,
 }
 
 export function round(num : number, decimals : number) {
@@ -109,6 +111,25 @@ function withSubscriptDecimals(number: Number, decimals: number) {
   })
 }
 
+function trimAllTrailingZeros(str) {
+  if (str.indexOf(DECIMAL_SEPARATOR) == -1)
+    return str
+
+  let [left, right] = str.split(DECIMAL_SEPARATOR)
+  right = right.replace(/0+$/, '')
+  return right ? `${left}${DECIMAL_SEPARATOR}${right}` : left
+}
+
+function trimZeros(number: Number) {
+  if (number.unitAbbreviation) {
+    number.formatted = number.formatted.replace(new RegExp(`${number.unitAbbreviation}$`), '')
+    number.formatted = trimAllTrailingZeros(number.formatted) + number.unitAbbreviation
+  } else
+    number.formatted = trimAllTrailingZeros(number.formatted.toString())
+
+  number.string = trimAllTrailingZeros(number.string.toString())
+}
+
 export function format(value: string | number, options: Options = DEFAULT_OPTIONS) {
   const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
@@ -120,6 +141,7 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
   if (value == null || value == undefined) return number
   if (opts.decimals && opts.abbreviated) withAbbreviation(number, opts.decimals)
   if (!number.formatted) withLocaleString(number, opts.decimals)
+  if (opts.trim) trimZeros(number)
   if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)
   if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol)
 
