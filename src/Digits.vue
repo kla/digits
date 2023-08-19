@@ -17,6 +17,7 @@ export interface Props {
   symbol?: string,
   showSymbol?: boolean,
   subscriptDecimals?: number,
+  trim?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   symbol: '$',
   showSymbol: true,
   subscriptDecimals: DEFAULT_OPTIONS.subscriptDecimals,
+  trim: DEFAULT_OPTIONS.trim,
 })
 
 const classes = computed(() => {
