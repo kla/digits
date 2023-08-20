@@ -1,6 +1,6 @@
 {
   "name": "@kla/digits",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": "https://github.com/kla/digits",
   "type": "module",
   "main": "./dist/digits.umd.mjs",

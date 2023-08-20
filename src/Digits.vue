@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes" :title="number.value.toString()">
+  <span :class="classes" :title="value ? value.toString() : ''">
     <span v-if="value != null && value != undefined">{{ formatted }}</span>
     <span v-if="number.unitAbbreviation" :class="`fm-abbrev fm-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
 const classes = computed(() => {
   const classes = [ 'fm' ]
 
-  if (parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
+  if (props.value && parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
   if (props.colored && number.value.number != '-0.00' && number.value.number != '0.00') classes.push('fm-colored')
   return classes.join(' ')
 })

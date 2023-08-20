@@ -31,7 +31,7 @@ describe('Digits', () => {
   it('accepts a showSymbol option', () => render(Digits, { props: { value: 1_500_000, showSymbol: false } }).getByText('1,500,000.00'))
   it('accepts a subscriptDecimals option', () => render(Digits, { props: { value: 0.000001, maxDecimals: 6, subscriptmaxDecimals: 2 } }).getByText('$0.0₅1'))
   it('handles -0.00', () => render(Digits, { props: { value: '-0.00' } }).getByText('$0.00'))
-  it('handles 0', () => {
-    render(Digits, { props: { value: 0 } }).getByText('$0.00')
-  })
+  it('handles 0', () => render(Digits, { props: { value: 0 } }).getByText('$0.00'))
+  it('handles null value', () => render(Digits, { props: { value: null } }))
+  it('handles undefined value', () => render(Digits, { props: { } }))
 })
