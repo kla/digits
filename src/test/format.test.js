@@ -21,7 +21,7 @@ it('accepts symbol options', () => {
   expect(format(-1_500_000, { symbol: '€' }).formatted).toBe('-€1,500,000.00')
   expect(format(1_500_000, { symbol: '₿' }).formatted).toBe('₿1,500,000.00')
   expect(format(-1_500_000, { symbol: '₿' }).formatted).toBe('-₿1,500,000.00')
-  expect(format(1_500_000, { symbol: '$' }).string).toBe('1,500,000.00')
+  expect(format(1_500_000, { symbol: '$' }).number).toBe('1,500,000.00')
   expect(format(1_500_000, { symbol: '$' }).symbol).toBe('$')
   expect(format(1_500_000, { symbol: '$', showSymbol: false }).formatted).toBe('1,500,000.00')
   expect(format(1_500_000, { symbol: 'BTC' }).formatted).toBe('1,500,000.00 BTC')
@@ -40,13 +40,13 @@ it('accepts a subscriptDecimals option', () => {
 it('accepts a trim option', () => {
   expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
   expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
-  expect(format('1.05000', { decimals: 10, trim: true }).string).toBe('1.05')
+  expect(format('1.05000', { decimals: 10, trim: true }).number).toBe('1.05')
   expect(format('1.00', { decimals: 10, trim: true }).formatted).toBe('1')
-  expect(format('1.00', { decimals: 10, trim: true }).string).toBe('1')
+  expect(format('1.00', { decimals: 10, trim: true }).number).toBe('1')
   expect(format(0.00402720, { decimals: 10, trim: true }).formatted).toBe('0.0040272')
-  expect(format(0.00402720, { decimals: 10, trim: true }).string).toBe('0.0040272')
+  expect(format(0.00402720, { decimals: 10, trim: true }).number).toBe('0.0040272')
   expect(format(1_500_000, { abbreviated: true, trim: true }).formatted).toBe('1.5M')
-  expect(format(1_500_000, { abbreviated: true, trim: true }).string).toBe('1.5')
+  expect(format(1_500_000, { abbreviated: true, trim: true }).number).toBe('1.5')
 })
 
 it('formats zero', () => {
@@ -55,9 +55,9 @@ it('formats zero', () => {
 
 it('does nothing for null and undefined', () => {
   expect(format(null).formatted).toBe('')
-  expect(format(null).string).toBe('')
+  expect(format(null).number).toBe('')
   expect(format(undefined).formatted).toBe('')
-  expect(format(undefined).string).toBe('')
+  expect(format(undefined).number).toBe('')
 })
 
 describe('abbreviated numbers', () => {
@@ -67,7 +67,7 @@ describe('abbreviated numbers', () => {
     const number = format(1_500_000_000_000_000, options)
     expect(number.value).toBe(1_500_000_000_000_000)
     expect(number.formatted).toBe('1.50Q')
-    expect(number.string).toBe('1.50')
+    expect(number.number).toBe('1.50')
     expect(number.unitAbbreviation).toBe('Q')
     expect(number.unit).toBe('quadrillion')
 
@@ -82,7 +82,7 @@ describe('abbreviated numbers', () => {
 
   it('abbreviates negative numbers', () => {
     expect(format(-1_500_000, options).formatted).toBe('-1.50M')
-    expect(format(-1_500_000, options).string).toBe('-1.50')
+    expect(format(-1_500_000, options).number).toBe('-1.50')
   })
 
   it('accepts a decimals option and rounds', () => {
@@ -93,7 +93,7 @@ describe('abbreviated numbers', () => {
   it('abbreviates numbers with a symbol', () => {
     expect(format(1_500_000, { ...options, symbol: '$' }).formatted).toBe('$1.50M')
     expect(format(-1_500_000, { ...options, symbol: '$' }).formatted).toBe('-$1.50M')
-    expect(format(-1_500_000, { ...options, symbol: '$' }).string).toBe('-1.50')
+    expect(format(-1_500_000, { ...options, symbol: '$' }).number).toBe('-1.50')
   })
 
   it('abbreviates numbers with a symbol name', () => {

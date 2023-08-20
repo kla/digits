@@ -35,13 +35,13 @@ const classes = computed(() => {
   const classes = [ 'fm' ]
 
   if (parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
-  if (props.colored && number.value.string != '-0.00' && number.value.string != '0.00') classes.push('fm-colored')
+  if (props.colored && number.value.number != '-0.00' && number.value.number != '0.00') classes.push('fm-colored')
   return classes.join(' ')
 })
 const number = computed(() => format(props.value, props))
 const formatted = computed(() => {
   let f = number.value.formatted.replace(number.value.unitAbbreviation || '', '')
-  if (number.value.string == '-0.00') f = f.replace('-', '')
+  if (number.value.number == '-0.00') f = f.replace('-', '')
   return f
 })
 </script>

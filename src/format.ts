@@ -1,7 +1,7 @@
 interface Number {
   value: number,
+  number: string,
   formatted: string,
-  string: string,
   symbol?: string,
   unit?: string,
   unitAbbreviation?: string,
@@ -75,14 +75,14 @@ function withAbbreviation(number: Number, decimals: number) {
   const abbr = abbreviate(number.value, decimals)
 
   number.formatted = (abbr.value ? `${abbr.value}${abbr.unitAbbreviation}` : number.value).toString()
-  number.string = abbr.value?.toString()
+  number.number = abbr.value?.toString()
   number.unitAbbreviation = abbr.unitAbbreviation
   number.unit = abbr.unit
 }
 
 function withLocaleString(number: Number, decimals) {
   const value = round(number.value, decimals)
-  number.formatted = number.string = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+  number.formatted = number.number = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
 }
 
 function withSymbol(number: Number, symbol: string) {
@@ -128,7 +128,7 @@ function trimAllTrailingZeros(str) {
 
 function trimZeros(number: Number) {
   number.formatted = withoutAbbreviation(number, (formatted) => trimAllTrailingZeros(formatted.toString()))
-  number.string = trimAllTrailingZeros(number.string.toString())
+  number.number = trimAllTrailingZeros(number.number.toString())
 }
 
 export function format(value: string | number, options: Options = DEFAULT_OPTIONS) {
@@ -136,7 +136,7 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
   const number: Number = {
     value: typeof(value) == 'string' ? parseFloat(value) : value,
     formatted: '',
-    string: '',
+    number: '',
   }
 
   if (value == null || value == undefined) return number
