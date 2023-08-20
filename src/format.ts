@@ -74,7 +74,6 @@ export function abbreviate(number: number, decimals: number): Abbreviation {
 function withAbbreviation(number: Number, decimals: number) {
   const abbr = abbreviate(number.value, decimals)
 
-  number.formatted = (abbr.value ? `${abbr.value}${abbr.unitAbbreviation}` : number.value).toString()
   number.number = abbr.value?.toString()
   number.unitAbbreviation = abbr.unitAbbreviation
   number.unit = abbr.unit
@@ -82,20 +81,7 @@ function withAbbreviation(number: Number, decimals: number) {
 
 function withLocaleString(number: Number, decimals) {
   const value = round(number.value, decimals)
-  number.formatted = number.number = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
-}
-
-function withSymbol(number: Number, symbol: string) {
-  const prepend = symbol.length == 1 ? true : false
-
-  if (prepend) {
-    const space = symbol.length == 1 ? '' : ' '
-    number.formatted = `${symbol}${space}${number.formatted}`
-  } else
-    number.formatted += ` ${symbol}`
-
-  number.formatted = number.formatted.replace(`${symbol}-`, `-${symbol}`)
-  number.symbol = symbol
+  number.number = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
 }
 
 function numberToSubscript(number) {
@@ -105,50 +91,62 @@ function numberToSubscript(number) {
 function withSubscriptDecimals(number: Number, decimals: number) {
   const regex = new RegExp(`\\${DECIMAL_SEPARATOR}(0+)`)
 
-  number.formatted = number.formatted.replace(regex, (n) => {
+  number.number = number.number.replace(regex, (n) => {
     const numDecimals = n.length - 1 // -1 because of the decimal separator
     return numDecimals >= decimals ? `${DECIMAL_SEPARATOR}0${numberToSubscript(numDecimals)}` : n
   })
 }
 
-function withoutAbbreviation(number: Number, fn: Function) {
-  return number.unitAbbreviation ?
-    fn(number.formatted.replace(new RegExp(`${number.unitAbbreviation}$`), '')) + number.unitAbbreviation :
-    fn(number.formatted)
-}
-
-function trimAllTrailingZeros(str) {
-  if (str.indexOf(DECIMAL_SEPARATOR) == -1)
-    return str
-
-  let [left, right] = str.split(DECIMAL_SEPARATOR)
-  right = right.replace(/0+$/, '')
-  return right ? `${left}${DECIMAL_SEPARATOR}${right}` : left
-}
-
 function trimZeros(number: Number) {
-  number.formatted = withoutAbbreviation(number, (formatted) => trimAllTrailingZeros(formatted.toString()))
-  number.number = trimAllTrailingZeros(number.number.toString())
+  if (number.number.indexOf(DECIMAL_SEPARATOR) == -1)
+    return
+
+  let [left, right] = number.number.split(DECIMAL_SEPARATOR)
+  right = right.replace(/0+$/, '')
+  number.number = right ? `${left}${DECIMAL_SEPARATOR}${right}` : left
+}
+
+function formattedWithSymbol(number: Number) {
+  if (!number.symbol) return
+  const prepend = number.symbol.length == 1 ? true : false
+
+  if (prepend) {
+    const space = number.symbol.length == 1 ? '' : ' '
+    number.formatted = `${number.symbol}${space}${number.formatted}`
+  } else
+    number.formatted += ` ${number.symbol}`
+
+  number.formatted = number.formatted.replace(`${number.symbol}-`, `-${number.symbol}`)
+}
+
+function buildFormatted(number: Number) {
+  number.formatted = number.number
+  if (number.unitAbbreviation) number.formatted += number.unitAbbreviation
+  formattedWithSymbol(number)
+  return number
 }
 
 export function format(value: string | number, options: Options = DEFAULT_OPTIONS) {
   const opts: Options = { ...DEFAULT_OPTIONS, ...options }
   const number: Number = {
     value: typeof(value) == 'string' ? parseFloat(value) : value,
-    formatted: '',
     number: '',
+    formatted: '',
   }
 
   if (value == null || value == undefined) return number
-  if (opts.decimals && opts.abbreviated) withAbbreviation(number, opts.decimals)
-  if (!number.formatted) withLocaleString(number, opts.decimals)
+
+  opts.decimals && opts.abbreviated ?
+    withAbbreviation(number, opts.decimals) :
+    withLocaleString(number, opts.decimals)
+
   if (opts.trim) trimZeros(number)
   if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)
-  if (opts.symbol && opts.showSymbol) withSymbol(number, opts.symbol)
+  if (opts.symbol && opts.showSymbol) number.symbol = opts.symbol
 
-  return number
+  return buildFormatted(number)
 }
 
-export function formatToString(value: string | number, options: Options = DEFAULT_OPTIONS) {
+export function formatted(value: string | number, options: Options = DEFAULT_OPTIONS) {
   return format(value, options).formatted
 }
