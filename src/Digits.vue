@@ -11,6 +11,7 @@ import { DEFAULT_OPTIONS, format } from './format'
 
 export interface Props {
   value?: number | string,
+  minDecimals?: number,
   maxDecimals?: number,
   subscriptDecimals?: number,
   abbreviated?: boolean,
@@ -22,6 +23,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   value: '',
+  minDecimals: DEFAULT_OPTIONS.minDecimals,
   maxDecimals: DEFAULT_OPTIONS.maxDecimals,
   subscriptDecimals: DEFAULT_OPTIONS.subscriptDecimals,
   abbreviated: DEFAULT_OPTIONS.abbreviated,

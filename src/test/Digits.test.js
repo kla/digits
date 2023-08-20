@@ -25,6 +25,7 @@ describe('Digits', () => {
     expect(container.firstChild).toHaveClass('fm-negative')
   })
 
+  it('accepts a minDecimals option', () => render(Digits, { props: { value: 1_500_000.45, minDecimals: 4, maxDecimals: 6, trim: true } }).getByText('$1,500,000.4500'))
   it('accepts a maxDecimals option', () => render(Digits, { props: { value: 1_500_000.45615, maxDecimals: 4 } }).getByText('$1,500,000.4562'))
   it('accepts a symbol option', () => render(Digits, { props: { value: 1_500_000, symbol: "BTC" } }).getByText('1,500,000.00 BTC'))
   it('accepts a showSymbol option', () => render(Digits, { props: { value: 1_500_000, showSymbol: false } }).getByText('1,500,000.00'))

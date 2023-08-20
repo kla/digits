@@ -8,6 +8,7 @@ interface Number {
 }
 
 interface Options {
+  minDecimals?: number,
   maxDecimals?: number,
   subscriptDecimals?: number,
   abbreviated?: boolean,
@@ -33,6 +34,7 @@ const UNITS = {
 }
 
 export const DEFAULT_OPTIONS: Options = {
+  minDecimals: undefined,
   maxDecimals: 2,
   subscriptDecimals: 4,
   abbreviated: false,
@@ -47,7 +49,7 @@ export function round(num : number, decimals : number) {
   return Math.round(num * multiplier) / multiplier
 }
 
-export function abbreviate(number: number, decimals: number): Abbreviation {
+export function abbreviate(number: number, decimals: number | undefined): Abbreviation {
   const sign = number < 0 ? -1 : 1
   const n = Math.abs(number)
   const units = Object.getOwnPropertyNames(UNITS)
@@ -71,7 +73,7 @@ export function abbreviate(number: number, decimals: number): Abbreviation {
   return { value: number.toFixed(decimals), unit: '', unitAbbreviation: '' }
 }
 
-function withAbbreviation(number: Number, decimals: number) {
+function withAbbreviation(number: Number, decimals: number | undefined) {
   const abbr = abbreviate(number.value, decimals)
 
   number.number = abbr.value?.toString()
@@ -79,9 +81,10 @@ function withAbbreviation(number: Number, decimals: number) {
   number.unit = abbr.unit
 }
 
-function withLocaleString(number: Number, decimals) {
-  const value = round(number.value, decimals)
-  number.number = value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+function withLocaleString(number: Number, decimals: number | undefined) {
+  const value = decimals ? round(number.value, decimals) : number.value
+  const options = decimals ? { minimumFractionDigits: decimals, maximumFractionDigits: decimals } : { }
+  number.number = value.toLocaleString(undefined, options)
 }
 
 function numberToSubscript(number) {
@@ -104,6 +107,16 @@ function trimZeros(number: Number) {
   let [left, right] = number.number.split(DECIMAL_SEPARATOR)
   right = right.replace(/0+$/, '')
   number.number = right ? `${left}${DECIMAL_SEPARATOR}${right}` : left
+}
+
+function withMinDecimals(number: Number, decimals: number) {
+  if (number.number.indexOf(DECIMAL_SEPARATOR) == -1)
+    return
+
+  let [left, right] = number.number.split(DECIMAL_SEPARATOR)
+
+  if (right && right.length < decimals)
+    number.number = `${left}${DECIMAL_SEPARATOR}${right.padEnd(decimals, '0')}`
 }
 
 function formattedWithSymbol(number: Number) {
@@ -141,6 +154,7 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
     withLocaleString(number, opts.maxDecimals)
 
   if (opts.trim) trimZeros(number)
+  if (opts.minDecimals) withMinDecimals(number, opts.minDecimals)
   if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)
   if (opts.symbol && opts.showSymbol) number.symbol = opts.symbol
 

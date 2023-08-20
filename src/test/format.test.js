@@ -7,6 +7,12 @@ it('does basic formatting', () => {
   expect(formatted(1_500_000.00)).toBe('1,500,000.00')
 })
 
+it('accepts a minDecimals option', () => {
+  expect(format(1_500_000.5, { minDecimals: 2 }).formatted).toBe('1,500,000.50')
+  expect(format(1_500_000.5, { minDecimals: 2, maxDecimals: 4 }).formatted).toBe('1,500,000.5000')
+  expect(format(1_500_000.5, { minDecimals: 2, maxDecimals: 4, trim: true }).formatted).toBe('1,500,000.50')
+})
+
 it('accepts a maxDecimals option and rounds', () => {
   expect(format(1_500_000.5, { maxDecimals: 2 }).formatted).toBe('1,500,000.50')
   expect(format(1_500_000, { maxDecimals: 2 }).formatted).toBe('1,500,000.00')
