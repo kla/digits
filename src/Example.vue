@@ -15,8 +15,8 @@
         <td>{{ item.ticker }}</td>
         <td>{{ item.name }}</td>
         <td align="right"><Digits :value="item.market_cap" abbreviated trim /></td>
-        <td align="right"><Digits :value="item.usd_price" :colored="false" :decimals="item.usd_decimals || 2" /></td>
-        <td align="right"><Digits :value="btcPrice(item.usd_price)" :colored="false" symbol="BTC" :show-symbol="false" :decimals="item.btc_decimals || 8" trim /></td>
+        <td align="right"><Digits :value="item.usd_price" :colored="false" :max-decimals="item.usd_decimals || 2" /></td>
+        <td align="right"><Digits :value="btcPrice(item.usd_price)" :colored="false" symbol="BTC" :show-symbol="false" :max-decimals="item.btc_decimals || 8" trim /></td>
         <td align="right"><Digits :value="item.change" /></td>
       </tr>
     </table>

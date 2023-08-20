@@ -7,11 +7,11 @@ it('does basic formatting', () => {
   expect(formatted(1_500_000.00)).toBe('1,500,000.00')
 })
 
-it('accepts a decimals option and rounds', () => {
-  expect(format(1_500_000.5, { decimals: 2 }).formatted).toBe('1,500,000.50')
-  expect(format(1_500_000, { decimals: 2 }).formatted).toBe('1,500,000.00')
-  expect(format(0.0001586, { decimals: 8 }).formatted).toBe('0.00015860')
-  expect(format(0.0001586, { decimals: 6 }).formatted).toBe('0.000159')
+it('accepts a maxDecimals option and rounds', () => {
+  expect(format(1_500_000.5, { maxDecimals: 2 }).formatted).toBe('1,500,000.50')
+  expect(format(1_500_000, { maxDecimals: 2 }).formatted).toBe('1,500,000.00')
+  expect(format(0.0001586, { maxDecimals: 8 }).formatted).toBe('0.00015860')
+  expect(format(0.0001586, { maxDecimals: 6 }).formatted).toBe('0.000159')
 })
 
 it('accepts symbol options', () => {
@@ -30,21 +30,21 @@ it('accepts symbol options', () => {
 })
 
 it('accepts a subscriptDecimals option', () => {
-  expect(format(0.00037, { symbol: 'BTC', decimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.0₃37000 BTC')
-  expect(format(0.00037, { symbol: 'BTC', decimals: 8, subscriptDecimals: 4 }).formatted).toBe('0.00037000 BTC')
-  expect(format(0.01, { symbol: 'BTC', decimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.01000000 BTC')
-  expect(format(1.00, { symbol: 'BTC', decimals: 2, subscriptDecimals: 2 }).formatted).toBe('1.0₂ BTC')
-  expect(format(1.00, { symbol: '$', decimals: 2, subscriptDecimals: 3 }).formatted).toBe('$1.00')
+  expect(format(0.00037, { symbol: 'BTC', maxDecimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.0₃37000 BTC')
+  expect(format(0.00037, { symbol: 'BTC', maxDecimals: 8, subscriptDecimals: 4 }).formatted).toBe('0.00037000 BTC')
+  expect(format(0.01, { symbol: 'BTC', maxDecimals: 8, subscriptDecimals: 3 }).formatted).toBe('0.01000000 BTC')
+  expect(format(1.00, { symbol: 'BTC', maxDecimals: 2, subscriptDecimals: 2 }).formatted).toBe('1.0₂ BTC')
+  expect(format(1.00, { symbol: '$', maxDecimals: 2, subscriptDecimals: 3 }).formatted).toBe('$1.00')
 })
 
 it('accepts a trim option', () => {
-  expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
-  expect(format('1000.05000', { decimals: 10, trim: true }).formatted).toBe('1,000.05')
-  expect(format('1.05000', { decimals: 10, trim: true }).number).toBe('1.05')
-  expect(format('1.00', { decimals: 10, trim: true }).formatted).toBe('1')
-  expect(format('1.00', { decimals: 10, trim: true }).number).toBe('1')
-  expect(format(0.00402720, { decimals: 10, trim: true }).formatted).toBe('0.0040272')
-  expect(format(0.00402720, { decimals: 10, trim: true }).number).toBe('0.0040272')
+  expect(format('1000.05000', { maxDecimals: 10, trim: true }).formatted).toBe('1,000.05')
+  expect(format('1000.05000', { maxDecimals: 10, trim: true }).formatted).toBe('1,000.05')
+  expect(format('1.05000', { maxDecimals: 10, trim: true }).number).toBe('1.05')
+  expect(format('1.00', { maxDecimals: 10, trim: true }).formatted).toBe('1')
+  expect(format('1.00', { maxDecimals: 10, trim: true }).number).toBe('1')
+  expect(format(0.00402720, { maxDecimals: 10, trim: true }).formatted).toBe('0.0040272')
+  expect(format(0.00402720, { maxDecimals: 10, trim: true }).number).toBe('0.0040272')
   expect(format(1_500_000, { abbreviated: true, trim: true }).formatted).toBe('1.5M')
   expect(format(1_500_000, { abbreviated: true, trim: true }).number).toBe('1.5')
 })
@@ -86,8 +86,8 @@ describe('abbreviated numbers', () => {
   })
 
   it('accepts a decimals option and rounds', () => {
-    expect(format(1_155_000, { ...options, decimals: 2 }).formatted).toBe('1.16M')
-    expect(format(1_154_000, { ...options, decimals: 2 }).formatted).toBe('1.15M');
+    expect(format(1_155_000, { ...options, maxDecimals: 2 }).formatted).toBe('1.16M')
+    expect(format(1_154_000, { ...options, maxDecimals: 2 }).formatted).toBe('1.15M');
   })
 
   it('abbreviates numbers with a symbol', () => {

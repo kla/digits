@@ -8,11 +8,11 @@ interface Number {
 }
 
 interface Options {
-  decimals?: number,
+  maxDecimals?: number,
+  subscriptDecimals?: number,
   abbreviated?: boolean,
   symbol?: string,
   showSymbol?: boolean,
-  subscriptDecimals?: number,
   trim?: boolean,
 }
 
@@ -33,11 +33,11 @@ const UNITS = {
 }
 
 export const DEFAULT_OPTIONS: Options = {
-  decimals: 2,
+  maxDecimals: 2,
+  subscriptDecimals: 4,
   abbreviated: false,
   symbol: undefined,
   showSymbol: true,
-  subscriptDecimals: 4,
   trim: false,
 }
 
@@ -136,9 +136,9 @@ export function format(value: string | number, options: Options = DEFAULT_OPTION
 
   if (value == null || value == undefined) return number
 
-  opts.decimals && opts.abbreviated ?
-    withAbbreviation(number, opts.decimals) :
-    withLocaleString(number, opts.decimals)
+  opts.maxDecimals && opts.abbreviated ?
+    withAbbreviation(number, opts.maxDecimals) :
+    withLocaleString(number, opts.maxDecimals)
 
   if (opts.trim) trimZeros(number)
   if (opts.subscriptDecimals) withSubscriptDecimals(number, opts.subscriptDecimals)

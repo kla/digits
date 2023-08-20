@@ -11,23 +11,23 @@ import { DEFAULT_OPTIONS, format } from './format'
 
 export interface Props {
   value?: number | string,
-  decimals?: number,
+  maxDecimals?: number,
+  subscriptDecimals?: number,
   abbreviated?: boolean,
   colored?: boolean,
   symbol?: string,
   showSymbol?: boolean,
-  subscriptDecimals?: number,
   trim?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: '',
-  decimals: DEFAULT_OPTIONS.decimals,
+  maxDecimals: DEFAULT_OPTIONS.maxDecimals,
+  subscriptDecimals: DEFAULT_OPTIONS.subscriptDecimals,
   abbreviated: DEFAULT_OPTIONS.abbreviated,
   colored: true,
   symbol: '$',
   showSymbol: true,
-  subscriptDecimals: DEFAULT_OPTIONS.subscriptDecimals,
   trim: DEFAULT_OPTIONS.trim,
 })
 
