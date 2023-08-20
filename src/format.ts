@@ -111,6 +111,12 @@ function withSubscriptDecimals(number: Number, decimals: number) {
   })
 }
 
+function withoutAbbreviation(number: Number, fn: Function) {
+  return number.unitAbbreviation ?
+    fn(number.formatted.replace(new RegExp(`${number.unitAbbreviation}$`), '')) + number.unitAbbreviation :
+    fn(number.formatted)
+}
+
 function trimAllTrailingZeros(str) {
   if (str.indexOf(DECIMAL_SEPARATOR) == -1)
     return str
@@ -121,12 +127,7 @@ function trimAllTrailingZeros(str) {
 }
 
 function trimZeros(number: Number) {
-  if (number.unitAbbreviation) {
-    number.formatted = number.formatted.replace(new RegExp(`${number.unitAbbreviation}$`), '')
-    number.formatted = trimAllTrailingZeros(number.formatted) + number.unitAbbreviation
-  } else
-    number.formatted = trimAllTrailingZeros(number.formatted.toString())
-
+  number.formatted = withoutAbbreviation(number, (formatted) => trimAllTrailingZeros(formatted.toString()))
   number.string = trimAllTrailingZeros(number.string.toString())
 }
 
