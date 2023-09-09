@@ -1,7 +1,7 @@
 <template>
   <span :class="classes" :title="value ? value.toString() : ''">
     <span v-if="value != null && value != undefined">{{ formatted }}</span>
-    <span v-if="number.unitAbbreviation" :class="`fm-abbrev fm-${number.unit}`">{{ number.unitAbbreviation }}</span>
+    <span v-if="number.unitAbbreviation" :class="`digits-abbrev digits-${number.unit}`">{{ number.unitAbbreviation }}</span>
   </span>
 </template>
 
@@ -34,10 +34,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const classes = computed(() => {
-  const classes = [ 'fm' ]
+  const classes = [ 'digits' ]
 
-  if (props.value && parseFloat(props.value.toString()) < 0) classes.push('fm-negative')
-  if (props.colored && number.value.number != '-0.00' && number.value.number != '0.00') classes.push('fm-colored')
+  if (props.value && parseFloat(props.value.toString()) < 0) classes.push('digits-negative')
+  if (props.colored && number.value.number != '-0.00' && number.value.number != '0.00') classes.push('digits-colored')
   return classes.join(' ')
 })
 const number = computed(() => format(props.value, props))
@@ -49,15 +49,15 @@ const formatted = computed(() => {
 </script>
 
 <style scoped>
-.fm {
-  &-quadrillion { color: var(--fm-quadrillion, deeppink) }
-  &-trillion { color: var(--fm-trillion, violet) }
-  &-billion { color: var(--fm-billion, blueviolet) }
-  &-million { color: var(--fm-million, goldenrod) }
-  &-thousand { color: var(--fm-thousand, lightskyblue) }
+.digits {
+  &-quadrillion { color: var(--digits-quadrillion, deeppink) }
+  &-trillion { color: var(--digits-trillion, violet) }
+  &-billion { color: var(--digits-billion, blueviolet) }
+  &-million { color: var(--digits-million, goldenrod) }
+  &-thousand { color: var(--digits-thousand, lightskyblue) }
 }
-.fm-colored {
-  color: var(--fm-positive, limegreen);
-  &.fm-negative { color: var(--fm-negative, indianred) }
+.digits-colored {
+  color: var(--digits-positive, limegreen);
+  &.digits-negative { color: var(--digits-negative, indianred) }
 }
 </style>

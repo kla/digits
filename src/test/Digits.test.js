@@ -7,24 +7,24 @@ describe('Digits', () => {
   it('renders', () => {
     const component = render({ value: 1_500_000 })
     expect(component.text()).toBe('$1,500,000.00')
-    expect(component.find('.fm-colored').exists()).toBe(true)
+    expect(component.find('.digits-colored').exists()).toBe(true)
   })
 
   it('accepts an abbreviation option', () => {
     const component = render({ value: 1_500_000, abbreviated: true })
     expect(component.text()).toBe('$1.50M')
-    expect(component.find('.fm-abbrev.fm-million').exists()).toBe(true)
+    expect(component.find('.digits-abbrev.digits-million').exists()).toBe(true)
   })
 
   it('accepts a colored option', () => {
     const component = render({ value: 1_500_000, colored: false })
-    expect(component.find('.fm-colored').exists()).toBe(false)
+    expect(component.find('.digits-colored').exists()).toBe(false)
   })
 
   it('handles negative Digitss', () => {
     const component = render({ value: -1_500 })
     expect(component.text()).toBe('-$1,500.00')
-    expect(component.find('.fm-negative').exists()).toBe(true)
+    expect(component.find('.digits-negative').exists()).toBe(true)
   })
 
   it('accepts a minDecimals option', () => expect(render({ value: 1_500_000.45, minDecimals: 4, maxDecimals: 6, trim: true }).text()).toBe('$1,500,000.4500'))
