@@ -48,7 +48,7 @@ const formatted = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .fm {
   &-quadrillion { color: var(--fm-quadrillion, deeppink) }
   &-trillion { color: var(--fm-trillion, violet) }
