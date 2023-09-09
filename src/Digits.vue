@@ -49,13 +49,11 @@ const formatted = computed(() => {
 </script>
 
 <style scoped>
-.digits {
-  &-quadrillion { color: var(--digits-quadrillion, deeppink) }
-  &-trillion { color: var(--digits-trillion, violet) }
-  &-billion { color: var(--digits-billion, blueviolet) }
-  &-million { color: var(--digits-million, goldenrod) }
-  &-thousand { color: var(--digits-thousand, lightskyblue) }
-}
+.digits-quadrillion { color: var(--digits-quadrillion, deeppink) }
+.digits-trillion { color: var(--digits-trillion, violet) }
+.digits-billion { color: var(--digits-billion, blueviolet) }
+.digits-million { color: var(--digits-million, goldenrod) }
+.digits-thousand { color: var(--digits-thousand, lightskyblue) }
 .digits-colored {
   color: var(--digits-positive, limegreen);
   &.digits-negative { color: var(--digits-negative, indianred) }
