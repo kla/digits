@@ -51,7 +51,7 @@ function btcPrice(usdPrice: Digits) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 * {
   color: lightgray;
   font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;

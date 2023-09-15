@@ -5,4 +5,4 @@ if [[ $ARGS =~ "--ui" ]]; then
   ARGS="${ARGS} --watch"
 fi
 
-yarn test $ARGS
+bun run test $ARGS

@@ -1,3 +1,8 @@
 #!/bin/sh
 echo "==> Installing dependencies"
-yarn install
+
+if [ -z "$CI" ]; then
+  bun install
+else
+  bun install -y
+fi

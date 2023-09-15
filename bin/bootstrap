@@ -1,4 +1,3 @@
 #!/bin/bash
-echo "==> Installing node"
-nodenv install -s `cat .node-version`
-npm install -g yarn
+echo "==> Installing bun"
+curl -fsSL https://bun.sh/install | bash

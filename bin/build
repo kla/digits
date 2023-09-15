@@ -1,3 +1,3 @@
 #!/bin/sh
 echo "==> Building digits component"
-yarn build
+bun run build
