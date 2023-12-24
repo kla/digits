@@ -45,7 +45,7 @@ const data = [
   { ticker: 'DOBO', name: 'DogeBonk', market_cap: 2_176_858, usd_price: 0.000000003734, change: 0.000000000004, usd_decimals: 12, btc_decimals: 13 },
 ]
 
-function btcPrice(usdPrice: Digits) {
+function btcPrice(usdPrice: number) {
   const btc = data.find(item => item.ticker === 'BTC')
   return btc ? usdPrice / btc.usd_price : undefined
 }
