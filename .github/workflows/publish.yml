@@ -1,0 +1,36 @@
+name: "Create Release"
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version Number
+        required: true
+jobs:
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3 # bun doesn't support publishing yet
+        with:
+          node-version-file: '.node-version'
+      - uses: oven-sh/setup-bun@v1
+      - run: bin/setup
+      - run: node --version
+      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - run: echo ${{ secrets.NPM_TOKEN }} | wc -m
+      - run: ls -la ~ && cat ~/.npmrc && bin/publish
+  release:
+    name: Release
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ github.event.inputs.version }}
