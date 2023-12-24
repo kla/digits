@@ -4,7 +4,7 @@
     "name": "Kien La",
     "email": "la.kien+digits@gmail.com"
   },
-  "version": "0.6.0",
+  "version": "0.6.1",
   "repository": "https://github.com/kla/digits",
   "type": "module",
   "main": "./dist/digits.umd.mjs",

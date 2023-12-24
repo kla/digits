@@ -1,4 +1,4 @@
 #!/bin/sh
 set -e
 bin/build
-bun run publish
+npm publish
