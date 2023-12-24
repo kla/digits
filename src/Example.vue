@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import Digits from './Digits.vue'
+import Digits from '~/Digits.vue'
 
 const data = [
   { ticker: 'AAPL', name: 'Apple', market_cap: 2_936_000_000_000, usd_price: 186.68, change: -0.31 },

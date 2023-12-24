@@ -9,6 +9,11 @@ export default defineConfig({
   define: {
     'process.env': {}
   },
+  resolve: {
+    alias: {
+      '~': resolve(__dirname, './src'),
+    }
+  },
   esbuild: {
     minify: true,
   },
